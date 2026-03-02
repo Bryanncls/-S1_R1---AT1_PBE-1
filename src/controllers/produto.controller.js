@@ -6,10 +6,19 @@ const produtoController = {
         try {
 
             if (!req.file) {
-                return res.status(400).json({ message: "Imagem não enviada" });
+                return res.status(400).json({
+                    message: "Imagem não enviada"
+                });
             }
 
             const { idCategoria, nomeProduto, valorProduto } = req.body;
+
+            if (!idCategoria || !nomeProduto || !valorProduto) {
+                return res.status(400).json({
+                    message: "Todos os campos são obrigatórios"
+                });
+            }
+
             const vinculoImagem = req.file.filename;
 
             await produtoModel.cadastrar(
@@ -19,45 +28,128 @@ const produtoController = {
                 vinculoImagem
             );
 
-            res.status(200).json({ message: "Produto cadastrado com sucesso" });
+            return res.status(201).json({
+                message: "Produto cadastrado com sucesso"
+            });
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: "Erro no servidor" });
+            return res.status(500).json({
+                message: "Erro no servidor"
+            });
         }
     },
 
     selecionar: async (req, res) => {
         try {
+
             const produtos = await produtoModel.selecionar();
-            res.status(200).json(produtos);
+
+            return res.status(200).json(produtos);
+
         } catch (error) {
-            res.status(500).json({ message: "Erro ao buscar produtos" });
+            console.error(error);
+            return res.status(500).json({
+                message: "Erro ao buscar produtos"
+            });
+        }
+    },
+
+    buscarProdutoPorID: async (req, res) => {
+        try {
+
+            const id = Number(req.params.id);
+
+            if (!id || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    message: "Informe um identificador (ID) válido"
+                });
+            }
+
+            const rows = await produtoModel.buscarProdutoPorID(id);
+
+            if (rows.length === 0) {
+                return res.status(404).json({
+                    message: "Produto não encontrado"
+                });
+            }
+
+            return res.status(200).json(rows[0]);
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                message: "Ocorreu um erro no servidor",
+                errorMessage: error.message
+            });
         }
     },
 
     editar: async (req, res) => {
         try {
-            const id = req.params.id;
+
+            const id = Number(req.params.id);
             const { idCategoria, nomeProduto, valorProduto } = req.body;
 
-            await produtoModel.editar(id, idCategoria, nomeProduto, valorProduto);
+            if (!id || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    message: "ID inválido"
+                });
+            }
 
-            res.status(200).json({ message: "Produto atualizado com sucesso" });
+            const resultado = await produtoModel.editar(
+                id,
+                idCategoria,
+                nomeProduto,
+                valorProduto
+            );
+
+            if (resultado[0].affectedRows === 0) {
+                return res.status(404).json({
+                    message: "Produto não encontrado"
+                });
+            }
+
+            return res.status(200).json({
+                message: "Produto atualizado com sucesso"
+            });
+
         } catch (error) {
-            res.status(500).json({ message: "Erro ao atualizar produto" });
+            console.error(error);
+            return res.status(500).json({
+                message: "Erro ao atualizar produto"
+            });
         }
     },
 
     excluir: async (req, res) => {
         try {
-            const id = req.params.id;
 
-            await produtoModel.excluir(id);
+            const id = Number(req.params.id);
 
-            res.status(200).json({ message: "Produto excluído com sucesso" });
+            if (!id || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    message: "ID inválido"
+                });
+            }
+
+            const resultado = await produtoModel.excluir(id);
+
+            if (resultado[0].affectedRows === 0) {
+                return res.status(404).json({
+                    message: "Produto não encontrado"
+                });
+            }
+
+            return res.status(200).json({
+                message: "Produto excluído com sucesso"
+            });
+
         } catch (error) {
-            res.status(500).json({ message: "Erro ao excluir produto" });
+            console.error(error);
+            return res.status(500).json({
+                message: "Erro ao excluir produto"
+            });
         }
     }
 

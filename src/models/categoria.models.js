@@ -13,6 +13,12 @@ const categoriaModel = {
         return rows;
     },
 
+    buscarCategoriaPorID: async (id) => {
+        const sql = "SELECT * FROM categorias WHERE idCategoria = ?;";
+        const [rows] = await pool.query(sql, [id]);
+        return rows;
+    },
+
     editar: async (id, descricaoCategoria) => {
         const sql = "UPDATE categorias SET descricaoCategoria = ? WHERE idCategoria = ?;";
         return await pool.query(sql, [descricaoCategoria, id]);

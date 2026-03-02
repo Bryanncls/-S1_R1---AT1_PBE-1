@@ -5,17 +5,23 @@ const categoriaController = {
     cadastrar: async (req, res) => {
         try {
 
-            const descricaoCategoria = req.body.descricaoCategoria;
+            const { descricaoCategoria } = req.body;
+
+            if (!descricaoCategoria) {
+                return res.status(400).json({
+                    message: "A descrição da categoria é obrigatória"
+                });
+            }
 
             await categoriaModel.cadastrar(descricaoCategoria);
 
-            res.status(200).json({
+            return res.status(201).json({
                 message: "Categoria cadastrada com sucesso"
             });
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({
+            return res.status(500).json({
                 message: "Ocorreu um erro no servidor"
             });
         }
@@ -24,13 +30,44 @@ const categoriaController = {
     selecionar: async (req, res) => {
         try {
 
-            const [rows] = await categoriaModel.listar();
+            const rows = await categoriaModel.listar();
 
-            res.status(200).json(rows);
+            return res.status(200).json(rows);
 
         } catch (error) {
-            res.status(500).json({
+            console.error(error);
+            return res.status(500).json({
                 message: "Erro ao buscar categorias"
+            });
+        }
+    },
+
+    buscarCategoriaPorID: async (req, res) => {
+        try {
+
+            const id = Number(req.params.id);
+
+            if (!id || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    message: "Informe um identificador (ID) válido"
+                });
+            }
+
+            const rows = await categoriaModel.buscarCategoriaPorID(id);
+
+            if (rows.length === 0) {
+                return res.status(404).json({
+                    message: "Categoria não encontrada"
+                });
+            }
+
+            return res.status(200).json(rows[0]);
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({
+                message: "Ocorreu um erro no servidor",
+                errorMessage: error.message
             });
         }
     },
@@ -38,17 +75,36 @@ const categoriaController = {
     editar: async (req, res) => {
         try {
 
-            const id = req.params.id;
-            const descricaoCategoria = req.body.descricaoCategoria;
+            const id = Number(req.params.id);
+            const { descricaoCategoria } = req.body;
 
-            await categoriaModel.editar(id, descricaoCategoria);
+            if (!id || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    message: "ID inválido"
+                });
+            }
 
-            res.status(200).json({
+            if (!descricaoCategoria) {
+                return res.status(400).json({
+                    message: "A descrição da categoria é obrigatória"
+                });
+            }
+
+            const resultado = await categoriaModel.editar(id, descricaoCategoria);
+
+            if (resultado[0].affectedRows === 0) {
+                return res.status(404).json({
+                    message: "Categoria não encontrada"
+                });
+            }
+
+            return res.status(200).json({
                 message: "Categoria atualizada com sucesso"
             });
 
         } catch (error) {
-            res.status(500).json({
+            console.error(error);
+            return res.status(500).json({
                 message: "Erro ao atualizar categoria"
             });
         }
@@ -57,16 +113,29 @@ const categoriaController = {
     excluir: async (req, res) => {
         try {
 
-            const id = req.params.id;
+            const id = Number(req.params.id);
 
-            await categoriaModel.excluir(id);
+            if (!id || !Number.isInteger(id)) {
+                return res.status(400).json({
+                    message: "ID inválido"
+                });
+            }
 
-            res.status(200).json({
+            const resultado = await categoriaModel.excluir(id);
+
+            if (resultado[0].affectedRows === 0) {
+                return res.status(404).json({
+                    message: "Categoria não encontrada"
+                });
+            }
+
+            return res.status(200).json({
                 message: "Categoria excluída com sucesso"
             });
 
         } catch (error) {
-            res.status(500).json({
+            console.error(error);
+            return res.status(500).json({
                 message: "Erro ao excluir categoria"
             });
         }

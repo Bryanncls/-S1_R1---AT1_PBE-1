@@ -17,6 +17,12 @@ const produtoModel = {
         return rows;
     },
 
+    buscarProdutoPorID: async (id) => {
+        const sql = "SELECT * FROM produtos WHERE idProduto = ?;";
+        const [rows] = await pool.query(sql, [id]);
+        return rows;
+    },
+
     editar: async (id, idCategoria, nomeProduto, valorProduto) => {
         const sql = `
             UPDATE produtos 

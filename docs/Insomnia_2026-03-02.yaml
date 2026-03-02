@@ -1,0 +1,320 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: "ATIVIDADE 1 "
+meta:
+  id: wrk_81c5b5a222864cb49d30fa04876112b2
+  created: 1771852591930
+  modified: 1771852591930
+  description: ""
+collection:
+  - name: Categoria
+    meta:
+      id: fld_0065bde8247640cdaf1d5590646b171f
+      created: 1771864702231
+      modified: 1772450766157
+      sortKey: -1771864702231
+      description: ""
+    children:
+      - url: http://localhost:8081/categoria
+        name: atualizar
+        meta:
+          id: req_be83c3cc22674227aba41d6ddc2f34d0
+          created: 1771865022615
+          modified: 1772450962205
+          isPrivate: false
+          description: ""
+          sortKey: -1771865028923
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"idCategoria": 10,
+            	"descricaoCategoria": "Eletrodomésticos",
+            	"dataCad": "2026-02-23T16:48:20.000Z"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/categoria
+        name: Cadastrar Categoria
+        meta:
+          id: req_651802de52ec4c4ab30a162c19566b29
+          created: 1771865028823
+          modified: 1772450733438
+          isPrivate: false
+          description: ""
+          sortKey: -1771865037371
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "descricaoCategoria": "objetos"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/categoria/1
+        name: Buscar por ID
+        meta:
+          id: req_74011eeec2624c809030c71bbfc19270
+          created: 1771865034195
+          modified: 1772449291734
+          isPrivate: false
+          description: ""
+          sortKey: -1771865034195
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/categoria
+        name: Buscar Categoria
+        meta:
+          id: req_8502292a0bd945588fbc32abb3aee83d
+          created: 1771865037271
+          modified: 1772448519458
+          isPrivate: false
+          description: ""
+          sortKey: -1771865037271
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/categoria/1
+        name: excluir
+        meta:
+          id: req_d1f7269b1d3a43a584eb97a1358d6005
+          created: 1771865129832
+          modified: 1772451042480
+          isPrivate: false
+          description: ""
+          sortKey: -1771865028723
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Produto
+    meta:
+      id: fld_74fd046b5bc24f22a15871e568969753
+      created: 1771865464345
+      modified: 1771865464345
+      sortKey: -1771865464345
+      description: ""
+    children:
+      - url: http://localhost:8081/produto
+        name: Cadastrar Produto
+        meta:
+          id: req_b3fb63439b4945ce9bec9221e765249f
+          created: 1771865468776
+          modified: 1771865828133
+          isPrivate: false
+          description: ""
+          sortKey: -1771865468776
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - name: idCategoria
+              value: "1"
+              description: ""
+              disabled: false
+            - name: nomeProduto
+              value: Iphone 17 pro
+              description: ""
+              disabled: false
+            - name: valorProduto
+              value: "8500"
+              description: ""
+              disabled: false
+            - name: image
+              value: ""
+              description: ""
+              disabled: false
+              fileName: C:\Users\46559720845\Pictures\Screenshots\Captura de tela 2026-02-23
+                135652.png
+              type: file
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/produto
+        name: Listar Produto
+        meta:
+          id: req_bed954cb3e9345068e262bf12c81a2fe
+          created: 1771865889830
+          modified: 1771865914243
+          isPrivate: false
+          description: ""
+          sortKey: -1771865889830
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/produto/1
+        name: excluir produto
+        meta:
+          id: req_dcba5c00dc20468eb030474942e23fc0
+          created: 1771865963925
+          modified: 1771865996169
+          isPrivate: false
+          description: ""
+          sortKey: -1771865963925
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/produto/2
+        name: Atualizar
+        meta:
+          id: req_58838895b705489bb75bf3d7e1065ede
+          created: 1771866005820
+          modified: 1772451015403
+          isPrivate: false
+          description: ""
+          sortKey: -1771866005820
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "idCategoria": 1,
+              "nomeProduto": "Iphone 17 pro preto",
+              "valorProduto": 8300
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8081/produto/2
+        name: Buscar por id
+        meta:
+          id: req_e4a6ec38861342d9ad607dc3ffb54654
+          created: 1772449727781
+          modified: 1772450676247
+          isPrivate: false
+          description: ""
+          sortKey: -1772449727781
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_5e0f701166248498bac0f8f59ef3dd001c011934
+    created: 1771852591950
+    modified: 1771852591950
+environments:
+  name: Base Environment
+  meta:
+    id: env_5e0f701166248498bac0f8f59ef3dd001c011934
+    created: 1771852591939
+    modified: 1771852591939
+    isPrivate: false
